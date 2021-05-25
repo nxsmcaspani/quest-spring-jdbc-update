@@ -16,18 +16,12 @@ public class WizardRepository {
     private final static String DB_USER = "h4rryp0tt3r";
     private final static String DB_PASSWORD = "Horcrux4life!";
 
-    public Wizard update(Long id, String firstName, String lastName, Date birthday,
-                         String birthPlace, String biography, boolean muggle) {
-
+    public Wizard update(Long id, String firstName, String lastName, Date birthday,String birthPlace, String biography, boolean muggle) {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = DriverManager.getConnection(
-                    DB_URL, DB_USER, DB_PASSWORD
-            );
-            statement = connection.prepareStatement(
-                    "UPDATE wizard SET first_name=?, last_name=?, birthday=?, birth_place=?, biography=?, is_muggle=? WHERE id=?"
-            );
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            statement = connection.prepareStatement("UPDATE wizard SET first_name=?, last_name=?, birthday=?, birth_place=?, biography=?, is_muggle=? WHERE id=?");
             statement.setString(1, firstName);
             statement.setString(2, lastName);
             statement.setDate(3, birthday);
@@ -35,12 +29,10 @@ public class WizardRepository {
             statement.setString(5, biography);
             statement.setBoolean(6, muggle);
             statement.setLong(7, id);
-
             if (statement.executeUpdate() != 1) {
                 throw new SQLException("failed to update data");
             }
-            return new Wizard(id, firstName, lastName, birthday,
-                    birthPlace, biography, muggle);
+            return new Wizard(id, firstName, lastName, birthday,birthPlace, biography, muggle);
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -51,7 +43,6 @@ public class WizardRepository {
     }
 
     public Wizard findById(Long id) {
-
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -59,9 +50,7 @@ public class WizardRepository {
             connection = DriverManager.getConnection(
                     DB_URL, DB_USER, DB_PASSWORD
             );
-            statement = connection.prepareStatement(
-                    "SELECT * FROM wizard WHERE id = ?;"
-            );
+            statement = connection.prepareStatement("SELECT * FROM wizard WHERE id = ?;");
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
 

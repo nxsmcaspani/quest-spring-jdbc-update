@@ -15,11 +15,8 @@ public class WizardController {
     private WizardRepository repository = new WizardRepository();
 
     @GetMapping("/wizard/update")
-    public String getWizardUpdate(Model model,
-                                  @RequestParam Long id) {
-
+    public String getWizardUpdate(Model model,@RequestParam Long id) {
         model.addAttribute("wizard", repository.findById(id));
-
         return "wizard_update";
     }
 
@@ -33,9 +30,7 @@ public class WizardController {
                              @RequestParam(required = false, defaultValue = "") String biography,
                              @RequestParam(required = false, defaultValue = "false") boolean muggle
     ) {
-        model.addAttribute("wizard", repository.update(id, firstName, lastName,
-                birthday, birthPlace, biography, muggle));
-
+        model.addAttribute("wizard", repository.update(id, firstName, lastName,birthday, birthPlace, biography, muggle));
         return "wizard_get";
     }
 }
